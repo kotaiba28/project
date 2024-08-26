@@ -1,0 +1,923 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الشقق</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Font Awesome for icons -->
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            direction: rtl;
+            padding-top: 70px; /* Adjusted for fixed navbar height */
+        }
+
+
+        .navbar {
+            background-color: #b8b7b6; /* لون الخلفية */
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: background 0.3s;
+            
+        }
+
+
+        .navbar .brand {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .brand i {
+            margin-left: 10px;
+            font-size: 28px;
+        }
+
+        .navbar .nav-items {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .nav-items a {
+            text-decoration: none;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            margin: 0 10px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .nav-items a:hover {
+            background-color: #004b87;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar .nav-items a i {
+            margin-left: 8px;
+            font-size: 18px;
+        }
+
+        .navbar form {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar input[type="text"] {
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .navbar input[type="text"]:focus {
+            border-color: #0056b3;
+        }
+
+        .navbar button {
+            background-color: #ff4d4d;
+            border: none;
+            padding: 10px 25px;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .navbar button:hover {
+            background-color: #ff4d4d;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .apartment-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .apartment-details h2 {
+            color: #007bff;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .apartment-details p {
+            font-size: 18px;
+            color: #333;
+            margin: 5px 0;
+        }
+
+        .button-container a {
+            text-decoration: none;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            font-size: 18px;
+        }
+
+        .button-container a.browse {
+            background-color: #28a745;
+        }
+
+        .button-container a.browse:hover {
+            background-color: #218838;
+        }
+
+        .navbar .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .category-select {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            font-size: 16px;
+            background-color: #ffffff;
+            color: #333;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .navbar .category-select:hover {
+            background-color: #f1f1f1;
+            border-color: #007bff;
+        }
+
+        .navbar .category-select:focus {
+            outline: none;
+            border-color: #0056b3;
+        }
+
+        .navbar .search-input {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            margin-right: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .navbar .search-input:focus {
+            border-color: #0056b3;
+        }
+
+        .navbar .search-button {
+            padding: 10px 25px;
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .navbar .search-button:hover {
+            background-color: #e74c3c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .add-button {
+            display: flex;
+            align-items: center;
+            background-color: #ffc107;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .navbar .add-button i {
+            font-size: 16px;
+            margin-right: 4px;
+        }
+
+        .navbar .add-button:hover {
+            background-color: #0db9f3;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+/* أيقونات وسائل التواصل الاجتماعي */
+
+.video-section {
+
+    position: relative;
+    width: 100%;
+    height: 650px; /* Adjust as needed */
+    overflow: hidden;
+    text-align: center;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffffc7;
+    text-align: center;
+    padding: 20px;
+}
+
+.video-overlay h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.video-overlay p {
+    font-size: 18px;
+}
+
+
+video {
+
+    width: 100%;
+    max-width: 100000px; /* ضبط العرض الأقصى للفيديو */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.discover-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #e74c3c;
+    text-decoration: none !important; /* أضف !important هنا */
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.discover-button:hover {
+    color: white;
+    background-color: #e74c3c;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+   /*this css for the footer*/
+    
+    .text-gradient {
+    background: linear-gradient(90deg, #ff8a00, #da1b60);
+    -webkit-background-clip: text;
+    background-clip: text; /* الخاصية القياسية */
+    -webkit-text-fill-color: transparent;
+}
+
+
+    .link-hover:hover {
+        color: #ff8a00 !important;
+        text-decoration: underline;
+    }
+
+    .social-hover:hover i {
+        color: #ff8a00 !important;
+        transform: scale(1.1);
+        transition: all 0.3s ease;
+    }
+
+    .icons2{
+        margin: 5px;
+        padding: 16px;
+    }
+   
+  
+       /*this css for the footer*/
+
+       .about-section {
+    padding: 60px 0;
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: 300;
+    color: #555;
+}
+
+h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+}
+
+p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    .about-section .row {
+        flex-direction: column;
+    }
+
+    .about-section .col-lg-6 {
+        margin-bottom: 30px;
+    }
+}
+
+    
+
+.services-section {
+    background-color: #f8f9fa;
+}
+
+.section-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: #333;
+}
+
+.service-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+.icon {
+    color: #007bff;
+}
+
+.service-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+}
+
+.service-description {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .services-section .row {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-card {
+        margin-bottom: 30px;
+    }
+}
+
+
+.contact-section {
+    background: url('https://via.placeholder.com/1500x800') no-repeat center center/cover;
+    color: #fff;
+}
+
+.section-title {
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.section-subtitle {
+    font-size: 18px;
+    color: #e0e0e0;
+}
+
+.contact-form {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 12px;
+    font-size: 16px;
+    color: #333;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 768px) {
+    .contact-section .col-lg-8 {
+        width: 100%;
+    }
+}
+
+
+
+
+
+
+
+
+/* قسم "أبرز العقارات" */
+.featured-apartments {
+    padding: 60px 0;
+    background-color: #f3f4f6;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: rgb(254, 248, 248);
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background-color: #e74c3c;
+    display: block;
+    margin: 20px auto 0;
+    border-radius: 2px;
+}
+
+.apartment-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.apartment-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    max-width: 32%;
+    margin: 0 auto;
+}
+
+.apartment-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.apartment-image-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 12px 12px 12px 12px;
+}
+
+.apartment-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease-in-out;
+}
+
+.apartment-card:hover .apartment-image {
+    transform: scale(1.1);
+}
+
+.apartment-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.apartment-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 10px;
+}
+
+.apartment-details {
+    font-size: 1.0rem;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.apartment-price {
+    font-size: 1.4rem;
+    color: #e74c3c;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.view-details-btn {
+    display: inline-block;
+    padding: 8px 15px; /* تم تقليل حجم التباعد */
+    background-color: #e74c3c;
+    color: #ffffff;
+    font-size: 1rem; /* تم تقليل حجم الخط */
+    border-radius: 25px; /* تم تقليل نصف القطر لتتناسب مع حجم الزر الأصغر */
+    text-decoration: none !important; /* أضف !important هنا */
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.view-details-btn:hover {
+    background-color: #c0392b;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+
+
+
+
+       
+        
+    </style>
+</head>
+<body>
+    <div class="navbar" >
+        <div class="brand"><i class="fas fa-home"></i> Rozanna</div>
+        <form action="">
+            <button class="heart"><i class="fas fa-heart"></i></button>
+        </form>
+
+        <div class="nav-items">
+            <a href="#rent"><i class="fas fa-key"></i> عقارات للإيجار</a>
+            <a href="#sale"><i class="fas fa-building"></i> عقارات للبيع</a>
+            <a href="#commercial-rent"><i class="fas fa-briefcase"></i> تجاري للإيجار</a>   
+            <a href="#commercial-sale"><i class="fas fa-store"></i> تجاري للبيع</a>
+            <form action="" method="GET" class="search-form">
+                <select name="category" class="category-select">
+                    <!-- خيارات البحث -->
+                    <option value="all">جميع الفئات</option>
+                    <option value="sale">عقارات للبيع</option>
+                    <option value="rent">عقارات للإيجار</option>
+                    <option value="commercial-sale">تجاري للبيع</option>
+                    <option value="commercial-rent">تجاري للإيجار</option>
+                </select>
+                <input type="text" name="q" required placeholder="بحث..." class="search-input">
+                <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+    
+   
+    <div class="video-section">
+        <div class="video-container">
+            <video autoplay muted loop>
+                <source src="{% static 'images/7578552-uhd_3840_2160_30fps.mp4' %}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-overlay">
+                <h2> اكتشف معنا  أفضل العروض العقارية</h2>
+                <br>
+                <a href="{% url 'discover'%}" class="discover-button">اكتشف الآن</a>
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br>
+    <section class="featured-apartments">
+        <h2 class="section-title">أبرز العقارات</h2>
+    
+        <div class="apartment-cards">
+            <div class="apartment-card">
+                <div class="apartment-image-container">
+                    <img src="{% static 'images/WhatsApp Image 2024-08-12 at 00.49.03_cf479f0b.jpg'%}" alt="شقة 1" class="apartment-image">
+                </div>
+                <div class="apartment-info">
+                    <h3 class="apartment-title">شقة في عجمان للإيجار</h3>
+                    <p class="apartment-details">3 غرف نوم | 2 حمام | 150 متر مربع</p>
+                    <a href="#" class="view-details-btn">عرض التفاصيل</a>
+                </div>
+            </div>
+    
+            <div class="apartment-card">
+                <div class="apartment-image-container">
+                    <img src="{% static 'images/WhatsApp Image 2024-08-12 at 00.49.00_c2aa86cb.jpg'%}" alt="شقة 2" class="apartment-image">
+                </div>
+                <div class="apartment-info">
+                    <h3 class="apartment-title">شقة في عجمان للإيجار</h3>
+                    <p class="apartment-details">2 غرف نوم | 1 حمام | 120 متر مربع</p>
+                    <a href="#" class="view-details-btn">عرض التفاصيل</a>
+                </div>
+            </div>
+    
+            <div class="apartment-card">
+                <div class="apartment-image-container">
+                    <img src="{% static 'images/WhatsApp Image 2024-08-12 at 00.48.58_0e283438.jpg'%}" alt="شقة 3" class="apartment-image">
+                </div>
+                <div class="apartment-info">
+                    <h3 class="apartment-title">شقة في عجمان للإيجار</h3>
+                    <p class="apartment-details">4 غرف نوم | 3 حمام | 200 متر مربع</p>
+                    <a href="#" class="view-details-btn">عرض التفاصيل</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    
+    
+    
+
+
+    
+    
+<br><br><br><br>
+    <div class="about-section">
+        <div class="container">
+            <div class="row align-items-center flex-row-reverse">
+                <div class="col-lg-6">
+                    <img src="{% static 'images/gettyimages-486816932-612x612.jpg' %}" alt="Mediator Image" class="img-fluid rounded-circle" style="width: 300px; height: 300px;">
+                </div>
+                
+                <div class="col-lg-6" style="text-align: right; direction: rtl;">
+                    <h2 class="section-title">عن الوسيط</h2>
+                    <p class="text-muted">نحن نقدم أفضل الخدمات الوساطة في السوق مع سنوات من الخبرة وسمعة قوية.</p>
+                    <h3 class="mt-4">رؤيتنا</h3>
+                    <p class="text-muted">تقديم خدمات وساطة مبتكرة وشاملة تساعد عملائنا على تحقيق أهدافهم بسهولة وفعالية.</p>
+                    <h3 class="mt-4">رسالتنا</h3>
+                    <p class="text-muted">توفير بيئة تعاونية وداعمة تمكن عملائنا من اتخاذ قرارات مستنيرة ومدروسة.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br><br><br><br>
+
+  
+
+
+
+    <div class="services-section py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">خدمات الوساطة</h2>
+            <div class="row">
+                <!-- Service 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card p-4 text-center h-100">
+                        <div class="icon mb-3">
+                            <i class="fas fa-home fa-2x text-primary"></i>
+                        </div>
+                        <h4 class="service-title mb-3">الوساطة العقارية</h4>
+                        <p class="service-description text-muted">نساعدك في العثور على العقار المناسب سواء كنت تبحث عن شراء، بيع، أو استئجار عقار.</p>
+                    </div>
+                </div>
+                <!-- Service 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card p-4 text-center h-100">
+                        <div class="icon mb-3">
+                            <i class="fas fa-briefcase fa-2x text-primary"></i>
+                        </div>
+                        <h4 class="service-title mb-3">الوساطة التجارية</h4>
+                        <p class="service-description text-muted">نوفر خدمات الوساطة للشركات والأعمال التجارية بما في ذلك البيع، الشراء، والإيجار.</p>
+                    </div>
+                </div>
+                <!-- Service 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="service-card p-4 text-center h-100">
+                        <div class="icon mb-3">
+                            <i class="fas fa-gavel fa-2x text-primary"></i>
+                        </div>
+                        <h4 class="service-title mb-3">الوساطة القانونية</h4>
+                        <p class="service-description text-muted">خدمات الوساطة القانونية لمساعدتك في النزاعات القانونية والتسوية بدون الحاجة إلى المحاكم.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+<br><br><br><br><br>
+
+    <div class="contact-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title mb-3">اتصل بنا</h2>
+                <p class="section-subtitle text-muted">نحن هنا لمساعدتك. لا تتردد في التواصل معنا للاستفسار أو لحجز استشارة.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form bg-white p-5 rounded shadow">
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="form-label">الاسم</label>
+                                <input type="text" class="form-control" id="name" placeholder="أدخل اسمك" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="form-label">البريد الإلكتروني</label>
+                                <input type="email" class="form-control" id="email" placeholder="أدخل بريدك الإلكتروني" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="subject" class="form-label">الموضوع</label>
+                                <input type="text" class="form-control" id="subject" placeholder="أدخل موضوع الرسالة" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label">الرسالة</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="اكتب رسالتك هنا" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-5 py-2">إرسال</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+
+   
+    <footer class="text-center text-lg-start bg-dark text-white pt-5">
+        <div class="container">
+            <div class="row">
+                <!-- About Us Section -->
+                <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+                    <h5 class="text-uppercase fw-bold mb-4 text-gradient">About Us</h5>
+                    <p class="text-muted mb-2">
+                        Experience the essence of luxury with our exclusive fragrances, crafted to perfection.
+                    </p>
+                    <p class="text-muted">
+                        Indulge your senses and discover the art of perfumery like never before.
+                    </p>
+                </div>
+    
+                <!-- Quick Links Section -->
+                <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+                    <h5 class="text-uppercase fw-bold mb-4 text-gradient">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <a href="" class="text-white text-decoration-none d-flex align-items-center link-hover">
+                                <i class="fas fa-home me-2 text-primary"></i> Home
+                            </a>
+                        </li>
+                        <li class="mb-3">
+                            <a href="" class="text-white text-decoration-none d-flex align-items-center link-hover">
+                                <i class="fas fa-envelope me-2 text-primary"></i> Contact
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" class="text-white text-decoration-none d-flex align-items-center link-hover">
+                                <i class="fas fa-info-circle me-2 text-primary"></i> About
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+    
+                <!-- Social Media Section -->
+                <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+                  <h5 class="text-uppercase fw-bold mb-4 text-gradient text-center text-lg-start">Follow Us</h5>
+                  <ul class="list-unstyled d-flex justify-content-center justify-content-lg-start">
+                     <div class="icons2">
+                        <li class="me-4">
+                            <a href="https://www.facebook.com" target="_blank" class="text-white text-decoration-none social-hover">
+                                <i class="fab fa-facebook-f fa-2x"></i>
+                            </a>
+                        </li>
+                     </div>
+                     <div class="icons2">
+                        <li class="me-4">
+                            <a href="https://twitter.com/?lang=en" target="_blank" class="text-white text-decoration-none social-hover">
+                                <i class="fab fa-twitter fa-2x"></i>
+                            </a>
+                        </li>
+                     </div>
+                      <div class="icons2">
+                        <li class="me-4">
+                            <a href="https://www.instagram.com/" target="_blank" class="text-white text-decoration-none social-hover">
+                                <i class="fab fa-instagram fa-2x"></i>
+                            </a>
+                        </li>
+                      </div>
+                      
+                       
+                      
+                  </ul>
+              </div>
+              
+    
+                <!-- Contact Info Section -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="text-uppercase fw-bold mb-4 text-gradient">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fas fa-phone-alt me-2 text-primary"></i> +1234567890</li>
+                        <li class="mb-3"><i class="fas fa-envelope me-2 text-primary"> </i>info@myperfumestore.com</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-center py-3 mt-4" style="background: linear-gradient(90deg, rgba(0,0,0,0.1) 0%, rgba(255,255,255,0.1) 100%);">
+            <small>© 2024 My Perfume Store. All Rights Reserved.</small>
+        </div>
+    </footer>
+    
+    
+
+
+
+    
+    
+        
+</body>
+</html>

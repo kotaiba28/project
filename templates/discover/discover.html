@@ -1,0 +1,1370 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اكتشف معنا</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <style>
+    body {
+      background-color: #2c3034;
+      margin: 0;
+      padding: 0;
+      direction: rtl;
+      padding-top: 70px; /* Adjusted for fixed navbar height */
+    }
+
+    .navbar {
+      background-color: #b8b7b6; /* لون الخلفية */
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      transition: background 0.3s;
+    }
+
+    .navbar .brand {
+      font-size: 24px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .brand i {
+      margin-left: 10px;
+      font-size: 28px;
+    }
+
+    .navbar .nav-items {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .nav-items a {
+      text-decoration: none;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      margin: 0 10px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .nav-items a:hover {
+      background-color: #004b87;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .navbar .nav-items a i {
+      margin-left: 8px;
+      font-size: 18px;
+    }
+
+    .navbar form {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar input[type="text"] {
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .navbar input[type="text"]:focus {
+      border-color: #0056b3;
+    }
+
+    .navbar button {
+      background-color: #ff4d4d;
+      border: none;
+      padding: 10px 25px;
+      color: white;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .navbar button:hover {
+      background-color: #ded5d5;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .navbar .search-form {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .category-select {
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+      font-size: 16px;
+      background-color: #ffffff;
+      color: #333;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .navbar .category-select:hover {
+      background-color: #f1f1f1;
+      border-color: #007bff;
+    }
+
+    .navbar .category-select:focus {
+      outline: none;
+      border-color: #0056b3;
+    }
+
+    .navbar .search-input {
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      margin-right: 10px;
+      font-size: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .navbar .search-input:focus {
+      border-color: #ff4d4d;
+    }
+
+    .navbar .search-button {
+      padding: 10px 25px;
+      background-color: #ff4d4d;
+      border: none;
+      border-radius: 20px;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .navbar .search-button:hover {
+      background-color: #ded5d5;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    /*this css for the footer*/
+
+    .text-gradient {
+      background: linear-gradient(90deg, #ff8a00, #da1b60);
+      -webkit-background-clip: text;
+      background-clip: text; /* الخاصية القياسية */
+      -webkit-text-fill-color: transparent;
+    }
+
+    .link-hover:hover {
+      color: #ff8a00 !important;
+      text-decoration: underline;
+    }
+
+    .social-hover:hover i {
+      color: #ff8a00 !important;
+      transform: scale(1.1);
+      transition: all 0.3s ease;
+    }
+
+    .icons2 {
+      margin: 5px;
+      padding: 16px;
+    }
+
+    /*this css for the footer*/
+
+    /*   for the search*/
+    .search-section {
+      border-radius: 10px;
+      position: relative;
+      text-align: center;
+      color: white;
+      height: 900px;
+      background-color: #f7f7f7;
+      overflow: hidden; /* لضمان عدم تجاوز المحتوى لحواف الصورة */
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-banner {
+      width: 60%;
+      height: 20%;
+      border-radius: 20px;
+      object-fit: cover; /* لضمان تغطية الصورة للمساحة بالكامل */
+      filter: brightness(70%); /* تعتيم الصورة قليلاً لتحسين وضوح النص */
+    }
+
+    .search-bar-overlay {
+      position: absolute;
+      top: 17%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      padding:  20px;
+      max-width: 600px;
+    }
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+    
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .search-input {
+      width: 60%; /* زيادة عرض مربع البحث لتحسين الوضوح */
+      padding: 12px;
+      border: none;
+      border-radius: 5px 5px 5px 5px; /* تدوير الحواف اليسرى فقط لمربع النص */
+      font-size: 16px;
+      outline: none;
+      background-color: #fff; /* لون خلفية مربع النص */
+      color: #333; /* لون النص داخل مربع البحث */
+    }
+
+    .search-input::placeholder {
+      color: #aaa; /* لون النص التوضيحي */
+    }
+
+    .search-button {
+      
+      padding: 12px 20px;
+      border: none;
+      background-color: #ff4d4d;
+      color: #ffffff;
+      border-radius: 5px 5px 5px 5px; /* تدوير الحواف اليمنى فقط لزر البحث */
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .search-button:hover {
+      background-color: #ff4d4d;
+    }
+
+    @media (max-width: 768px) {
+      .search-input {
+        width: 60%; /* تقليل عرض مربع البحث على الشاشات الصغيرة */
+      }
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .filter-option {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    .property-category {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .property-card {
+      text-align: center;
+      margin: 15px;
+      width: 180px;
+      height: 170px;
+      border-radius: 10px;
+
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .property-card img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .property-card p {
+      font-size: 16px;
+      color: #333;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .property-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .containerr {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px; /* يمكنك ضبط الارتفاع حسب حاجتك */
+    }
+
+    .section-title {
+      font-size: 24px;
+      color: #333;
+      margin: 20px 0;
+    }
+
+    .search-container {
+      width: 300px;
+      height: 525px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+      text-align: right;
+      font-family: "Arial", sans-serif;
+      margin: 94px auto;
+    }
+
+    .search-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .reset-button {
+      background: none;
+      border: none;
+      color: #ff4d4d;
+      font-size: 14px;
+      cursor: pointer;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .search-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .search-group input,
+    .search-group select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    /* تنسيق الصفوف بحيث تظهر تحت بعضها البعض */
+    .property-row {
+      display: flex;
+      justify-content: space-around; /* توزيع العناصر بشكل متساوي في الصف */
+      align-items: center; /* توسيط العناصر عمودياً */
+      gap: 20px; /* مسافة بين العناصر */
+      margin-bottom: 20px; /* مسافة بين كل صف والذي يليه */
+    }
+
+    /* تنسيق الكارد */
+    .property-card {
+      background-color: #f9f9f9; /* لون خلفية الكارد */
+      padding: 10px; /* مساحة داخلية */
+      border-radius: 8px; /* حواف مستديرة */
+      text-align: center; /* محاذاة النص في الوسط */
+      width: 150px; /* عرض ثابت لكل كارد */
+    }
+
+    /* تنسيق الصورة داخل الكارد */
+    .property-card img {
+      width: 100%; /* عرض الصورة بالكامل داخل الكارد */
+      border-radius: 8px; /* حواف مستديرة للصورة */
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .apartment-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .apartment-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin: 10px;
+      overflow: hidden;
+      width: 300px;
+      text-align: center;
+      background-color: #fff;
+    }
+
+    .apartment-card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .apartment-details {
+      padding: 15px;
+    }
+
+    .apartment-details h2 {
+      margin: 0 0 10px;
+      font-size: 1.2em;
+    }
+
+    .apartment-details p {
+      margin: 5px 0;
+    }
+
+    .view-btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #ff4d4d;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .view-btn:hover {
+      background-color: #ff4d4d;
+    }
+
+    .container2 {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 5px;
+    }
+
+    .apartment-card2 {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .apartment-card2:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .apartment-image2 {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      margin-right: 20px;
+      object-fit: cover;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .apartment-details2 h2 {
+      color: #4e3a2e; /* لون شجرة البيرن */
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .apartment-details2 p {
+      font-size: 18px;
+      color: #333;
+      margin: 5px 0;
+    }
+
+    .button-container2 a {
+      text-decoration: none;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 8px;
+      transition: background-color 0.3s, transform 0.3s;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .button-container2 a.browse {
+      background-color: #ff4d4d;
+    }
+
+    .button-container2 a.browse:hover {
+      background-color: #ff3333;
+      transform: scale(1.05);
+    }
+
+  
+
+
+    .content {
+      flex-grow: 1; /* السماح للمحتوى بالتمدد */
+      padding: 20px;
+    }
+
+    .container3 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    .number-line {
+      display: inline-block;
+      padding: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .number {
+      margin: 0 10px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #007bff;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .number:hover {
+      color: #0056b3;
+      transform: scale(1.2);
+    }
+
+    .number.active {
+      font-weight: bold;
+      color: #ff0000;
+    }
+
+    .latest-properties {
+      text-align: center;
+      margin: 10px auto; /* لضبط الهامش تلقائياً من الجانبين */
+      width: 1255px;
+    }
+
+    .latest-properties h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .property-slider {
+      display: flex;
+      justify-content: space-around;
+      overflow-x: auto;
+      padding: 5px 0;
+    }
+
+    .property-card3 {
+      width: 200px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      margin-right: 15px;
+    }
+
+    .property-card3 img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .property-info {
+      padding: 10px;
+      text-align: right;
+    }
+
+    .property-price {
+      font-size: 18px;
+      color: #ff5722;
+      margin: 0;
+      font-weight: bold;
+    }
+
+    .property-description {
+      font-size: 14px;
+      margin: 5px 0;
+      color: #333;
+    }
+
+    .property-location {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .property-card3:hover {
+      transform: translateY(-5px);
+    }
+    .right-aligned {
+      color: #2c3034;
+      text-align: center; /* لمحاذاة النص إلى الجهة اليمنى */
+    }
+
+
+
+
+    .navbar2 {
+    background-color: #2c3034; /* لون الخلفية */
+    color: #fff;
+    padding: 10px 20px;
+    position: sticky; /* يجعله مثبتًا عند التمرير ضمن القسم */
+    top: 0; /* يثبت الشريط في أعلى الـ <div> */
+    z-index: 10; /* يجعل الشريط فوق باقي المحتوى */
+    border-radius: 8px;
+    transform: translateX(-25px); /* تحريك الشريط قليلاً إلى اليسار */
+    width: 930px;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* تنسيق الروابط داخل الشريط العلوي */
+.navbar2 a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.navbar2 p {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+.navbar2 a:hover {
+    background-color: #575757; /* تغيير اللون عند المرور */
+}
+
+
+
+
+.sidebar {
+      color: white;
+      width: 130px;
+     
+    }
+
+
+
+
+
+/* تحسينات للشريط العلوي */
+.navbar3 {
+    background-color: #2c3034; /* لون الخلفية */
+    color: #fff;
+    padding: 10px 20px;
+    position: sticky; /* يجعله مثبتًا عند التمرير ضمن القسم */
+    top: 0; /* يثبت الشريط في أعلى الـ <div> */
+    z-index: 10; /* يجعل الشريط فوق باقي المحتوى */
+    border-radius: 8px;
+    transform: translateX(390px); /* تحريك الشريط قليلاً إلى اليسار */
+    width: 700px;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* تنسيق الروابط داخل الشريط العلوي */
+.navbar3 a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transform: translateX(40px); /* تحريك الشريط قليلاً إلى اليسار */
+
+    transition: background 0.3s;
+}
+
+/* إضافة أيقونة واتساب بجانب النص */
+.navbar3 p {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+
+
+.navbar3 a:hover {
+    background-color: #575757; /* تغيير اللون عند المرور */
+}
+/* تغيير لون الرابط عند المرور */
+
+.nv{
+    transform: translateX(-50px); /* تحريك الشريط قليلاً إلى اليسار */
+
+
+}
+
+
+
+
+  </style>
+
+
+  <body>
+    <div class="navbar">
+      <div class="brand"><i class="fas fa-home"></i> Rozanna</div>
+      <form action="">
+        <button class="heart"><i class="fas fa-heart"></i></button>
+      </form>
+
+      <div class="nav-items">
+        <a href="#rent"><i class="fas fa-key"></i> عقارات للإيجار</a>
+        <a href="#sale"><i class="fas fa-building"></i> عقارات للبيع</a>
+        <a href="#commercial-rent"
+          ><i class="fas fa-briefcase"></i> تجاري للإيجار</a
+        >
+        <a href="#commercial-sale"><i class="fas fa-store"></i> تجاري للبيع</a>
+        <form action="" method="GET" class="search-form">
+          <select name="category" class="category-select">
+            <!-- خيارات البحث -->
+            <option value="all">جميع الفئات</option>
+            <option value="sale">عقارات للبيع</option>
+            <option value="rent">عقارات للإيجار</option>
+            <option value="commercial-sale">تجاري للبيع</option>
+            <option value="commercial-rent">تجاري للإيجار</option>
+          </select>
+          <input
+            type="text"
+            name="q"
+            required
+            placeholder="بحث..."
+            class="search-input"
+          />
+          <button type="submit" class="search-button">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    <br><br>
+
+
+    
+    <div class="search-bar-overlay">
+        <div class="search-bar">  
+            <div class="navbar3">
+                <p><i class="fa fa-whatsapp"></i> للاستفسار اتصل : </p>
+                <a href="https://wa.me/0982347075" target="_blank">0982347075</a>
+                <a class="nv" href="{% url 'main'%}"> الرئيسية</a>
+                <a class="nv" href=""> بحث</a>
+            </div>
+        </div>
+    </div>
+    
+    
+    <br><br>
+
+    <div class="search-section">
+      
+      <br /><br /><br />
+      <div class="latest-properties">
+        <h2 class="right-aligned">أحدث العقارات</h2>
+        <div class="property-slider">
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+
+          <!-- Repeat similar blocks for more properties -->
+        </div>
+      </div>
+
+      <br /><br />
+      <div class="latest-properties">
+        <h2 class="right-aligned">عقارات مميزة</h2>
+        <div class="property-slider">
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+          <div class="property-card3">
+            <img
+              src="{% static 'images/Penthouse-Rathbone-Square-e1485709140836.jpg' %}"
+              alt="صورة العقار"
+            />
+            <div class="property-info">
+              <p class="property-price">6,500,000 درهم</p>
+              <p class="property-description">
+                شقة للبيع 228 م<sup>2</sup> - دبي
+              </p>
+              <p class="property-location">دبي</p>
+            </div>
+          </div>
+
+          <!-- Repeat similar blocks for more properties -->
+        </div>
+      </div>
+    </div>
+
+    <br /><br /><br /><br /><br />
+
+    <div class="property-category">
+      <!-- قسم البحث -->
+      <div class="search-container">
+        <h2 class="search-title">بحث</h2>
+        <button class="reset-button">مسح الاختيارات</button>
+
+        <div class="search-group">
+          <select>
+            <option>شقق</option>
+            <!-- يمكنك إضافة خيارات أخرى هنا -->
+          </select>
+        </div>
+
+        <div class="search-group">
+          <input type="text" placeholder="السعر من" />
+          <input type="text" placeholder="السعر الي" />
+        </div>
+
+        <div class="search-group">
+          <input type="text" placeholder="المساحة من" />
+          <input type="text" placeholder="المساحة الي" />
+        </div>
+
+        <div class="search-group">
+          <select>
+            <option>طريقة الدفع</option>
+            <!-- يمكنك إضافة خيارات أخرى هنا -->
+          </select>
+        </div>
+
+        <div class="search-group">
+          <select>
+            <option>الغرف</option>
+            <!-- يمكنك إضافة خيارات أخرى هنا -->
+          </select>
+        </div>
+
+        <div class="search-group">
+          <select>
+            <option>نوع التشطيب</option>
+            <!-- يمكنك إضافة خيارات أخرى هنا -->
+          </select>
+        </div>
+
+     
+
+        <button class="search-button">بحث</button>
+      </div>
+
+   
+   
+      
+      <!-- قسم خاص بالعقارات -->
+      <div class="property-rows">
+        <br /><br /><br />
+        <div class="property-row">
+          <div class="property-card">
+            <img src="{% static 'images/images.jpeg' %}" alt="شقق" />
+            <p>شقق</p>
+          </div>
+          <div class="property-card">
+            <img src="{% static 'images/download.jpeg' %}" alt="ستوديو" />
+            <p>ستوديو</p>
+          </div>
+          <div class="property-card">
+            <img src="{% static '/images/download (1).jpeg' %}" alt="فلل" />
+            <p>فلل</p>
+          </div>
+          <div class="property-card">
+            <img src="{% static 'images/download (2).jpeg' %}" alt="بنتهاوس" />
+            <p>بنتهاوس روف</p>
+          </div>
+          <div class="property-card">
+            <img src="{% static 'images/download (3).jpeg' %}" alt="شاليه" />
+            <p>شاليه</p>
+          </div>
+        </div>
+        <br>
+   
+
+        <!-- قسم جديد خاص بالإمارات -->
+        <div class="property-row">
+          <div class="property-card">
+            <img
+              src="{% static 'images/download (6).jpeg' %}"
+              alt="شقق الإمارات"
+            />
+            <p>عجمان</p>
+          </div>
+          <div class="property-card">
+            <img
+              src="{% static 'images/download (7).jpeg' %}"
+              alt="ستوديو الإمارات"
+            />
+            <p>الشارقة</p>
+          </div>
+          <div class="property-card">
+            <img
+              src="{% static 'images/download (4).jpeg' %}"
+              alt="فلل الإمارات"
+            />
+            <p>دبي</p>
+          </div>
+          <div class="property-card">
+            <img
+              src="{% static 'images/download (5).jpeg' %}"
+              alt="شاليه الإمارات"
+            />
+            <p>ابو ظبي</p>
+          </div>
+          <div class="property-card">
+            <img
+              src="{% static 'images/download (8).jpeg' %}"
+              alt="بنتهاوس الإمارات"
+            />
+            <p>العين</p>
+          </div>
+        </div>
+        <br>
+        <div class="navbar2">
+            <p> ترتيب حسب : </p>
+            <a href="#about">السعر الاعلى</a>
+            <a href="#services">السعر الاقل</a>
+            <a href="#contact"> التاريخ</a>
+        </div>
+
+      <br><br>
+
+        <main>
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+          <div class="container2">
+            <div class="apartment-card2">
+              <img
+                src="apartment.jpg"
+                alt="صورة الشقة"
+                class="apartment-image2"
+              />
+              <div class="apartment-details2">
+                <h2>شقة رقم 10</h2>
+                <p>اسم المستأجر:</p>
+                <p>عدد الغرف: 3</p>
+              </div>
+              <div class="button-container2">
+                <a href="" class="browse">تصفح</a>
+              </div>
+            </div>
+          </div>
+          <!-- أضف المزيد من الشقق هنا -->
+          <div class="container3">
+            <div class="number-line">
+              <span class="number" data-page="1">1</span>
+              <span class="number" data-page="2">2</span>
+              <span class="number" data-page="3">3</span>
+              <span class="number" data-page="4">4</span>
+              <span class="number" data-page="5">5</span>
+            </div>
+          </div>
+        </main>
+        <br /><br /><br /><br /><br />
+      </div>
+
+      <div class="sidebar">
+        <div class="filters">
+        <p>kotaiba alzohaily</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="text-center text-lg-start bg-dark text-white pt-5">
+      <div class="container">
+        <div class="row">
+          <!-- About Us Section -->
+          <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+            <h5 class="text-uppercase fw-bold mb-4 text-gradient">About Us</h5>
+            <p class="text-muted mb-2">
+              Experience the essence of luxury with our exclusive fragrances,
+              crafted to perfection.
+            </p>
+            <p class="text-muted">
+              Indulge your senses and discover the art of perfumery like never
+              before.
+            </p>
+          </div>
+
+          <!-- Quick Links Section -->
+          <div class="col-lg-2 col-md-6 mb-5 mb-lg-0">
+            <h5 class="text-uppercase fw-bold mb-4 text-gradient">
+              Quick Links
+            </h5>
+            <ul class="list-unstyled">
+              <li class="mb-3">
+                <a
+                  href=""
+                  class="text-white text-decoration-none d-flex align-items-center link-hover"
+                >
+                  <i class="fas fa-home me-2 text-primary"></i> Home
+                </a>
+              </li>
+              <li class="mb-3">
+                <a
+                  href=""
+                  class="text-white text-decoration-none d-flex align-items-center link-hover"
+                >
+                  <i class="fas fa-envelope me-2 text-primary"></i> Contact
+                </a>
+              </li>
+              <li>
+                <a
+                  href=""
+                  class="text-white text-decoration-none d-flex align-items-center link-hover"
+                >
+                  <i class="fas fa-info-circle me-2 text-primary"></i> About
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Social Media Section -->
+          <div class="col-lg-4 col-md-6 mb-5 mb-lg-0">
+            <h5
+              class="text-uppercase fw-bold mb-4 text-gradient text-center text-lg-start"
+            >
+              Follow Us
+            </h5>
+            <ul
+              class="list-unstyled d-flex justify-content-center justify-content-lg-start"
+            >
+              <div class="icons2">
+                <li class="me-4">
+                  <a
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    class="text-white text-decoration-none social-hover"
+                  >
+                    <i class="fab fa-facebook-f fa-2x"></i>
+                  </a>
+                </li>
+              </div>
+              <div class="icons2">
+                <li class="me-4">
+                  <a
+                    href="https://twitter.com/?lang=en"
+                    target="_blank"
+                    class="text-white text-decoration-none social-hover"
+                  >
+                    <i class="fab fa-twitter fa-2x"></i>
+                  </a>
+                </li>
+              </div>
+              <div class="icons2">
+                <li class="me-4">
+                  <a
+                    href="https://www.instagram.com/"
+                    target="_blank"
+                    class="text-white text-decoration-none social-hover"
+                  >
+                    <i class="fab fa-instagram fa-2x"></i>
+                  </a>
+                </li>
+              </div>
+            </ul>
+          </div>
+
+          <!-- Contact Info Section -->
+          <div class="col-lg-2 col-md-6">
+            <h5 class="text-uppercase fw-bold mb-4 text-gradient">
+              Contact Us
+            </h5>
+            <ul class="list-unstyled">
+              <li class="mb-3">
+                <i class="fas fa-phone-alt me-2 text-primary"></i> +1234567890
+              </li>
+              <li class="mb-3">
+                <i class="fas fa-envelope me-2 text-primary"> </i
+                >info@myperfumestore.com
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="text-center py-3 mt-4"
+        style="
+          background: linear-gradient(
+            90deg,
+            rgba(0, 0, 0, 0.1) 0%,
+            rgba(255, 255, 255, 0.1) 100%
+          );
+        "
+      >
+        <small>© 2024 My Perfume Store. All Rights Reserved.</small>
+      </div>
+    </footer>
+  </body>
+  <script>
+    document.querySelectorAll(".number").forEach(function (numberElement) {
+      numberElement.addEventListener("click", function () {
+        // إزالة التمييز عن جميع الأرقام
+        document.querySelectorAll(".number").forEach(function (el) {
+          el.classList.remove("active");
+        });
+
+        // إضافة التمييز للرقم الذي تم النقر عليه
+        numberElement.classList.add("active");
+
+        // تغيير الصفحة أو تنفيذ إجراء معين
+        const pageNumber = numberElement.getAttribute("data-page");
+        window.location.href = `page${pageNumber}.html`;
+      });
+    });
+  </script>
+</html>
